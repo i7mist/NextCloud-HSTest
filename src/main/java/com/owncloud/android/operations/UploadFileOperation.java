@@ -529,6 +529,9 @@ public class UploadFileOperation extends SyncOperation {
             EncryptionUtils.EncryptedFile encryptedFile = EncryptionUtils.encryptFile(mFile, key, iv);
 
             // new random file name, check if it exists in metadata
+            @UniqueIdentifierSource(
+                ID = "UniqueIdentifierSource-0",
+                purposes = {"To generate random UUID for file name."})
             String encryptedFileName = UUID.randomUUID().toString().replaceAll("-", "");
 
             while (metadata.getFiles().get(encryptedFileName) != null) {
@@ -1194,6 +1197,9 @@ public class UploadFileOperation extends SyncOperation {
             }
 
             Log_OC.d(TAG, "Copying file contents");
+            @UserFileSource(
+                ID = "UserFileSource-0",
+                purposes = {"update servers when local file is modified"})
             InputStream in = null;
             OutputStream out = null;
 

@@ -52,7 +52,13 @@ public class CredentialsDialogFragment extends DialogFragment
     private EditText mUsernameET;
     private EditText mPasswordET;
 
+    @UserInputSource(
+        ID = "UserInputSource-8",
+        purposes = {"Provide Username"})
     private String mUsernameStr;
+    @UserInputSource(
+        ID = "UserInputSource-9",
+        purposes = {"Provide password"})
     private String mPasswordStr;
 
 
@@ -138,7 +144,13 @@ public class CredentialsDialogFragment extends DialogFragment
     public void onClick(DialogInterface dialog, int which) {
         if (which == AlertDialog.BUTTON_POSITIVE) {
 
+            @UserInputSource(
+                ID = "UserInputSource-10",
+                purposes = {"Provide user name"})
             String username = mUsernameET.getText().toString();
+            @UserInputSource(
+                ID = "UserInputSource-11",
+                purposes = {"Provide password"})
             String password = mPasswordET.getText().toString();
 
             // Proceed with the authentication

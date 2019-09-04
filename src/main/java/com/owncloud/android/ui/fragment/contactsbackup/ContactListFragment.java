@@ -395,6 +395,9 @@ public class ContactListFragment extends FileFragment implements Injectable {
         // add local one
         accounts.add(new ContactAccount("Local contacts", null, null));
 
+        @ContactsSource(
+            ID = "ContactsSource-2",
+            purposes = {"Get contact account name and type for users to choose from"})
         Cursor cursor = null;
         try {
             cursor = getContext().getContentResolver().query(ContactsContract.RawContacts.CONTENT_URI,

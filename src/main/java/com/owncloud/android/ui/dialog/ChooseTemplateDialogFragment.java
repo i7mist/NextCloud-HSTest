@@ -192,6 +192,9 @@ public class ChooseTemplateDialogFragment extends DialogFragment implements Dial
 
     @Override
     public void onClick(Template template) {
+        @UserInputSource(
+            ID = "UserInputSource-12",
+            purposes = {"Provide file name"})
         String name = fileName.getText().toString();
         String path = parentFolder.getRemotePath() + name;
 

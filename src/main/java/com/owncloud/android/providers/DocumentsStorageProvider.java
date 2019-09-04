@@ -329,7 +329,11 @@ public class DocumentsStorageProvider extends DocumentsProvider {
 
         Uri uri = Uri.parse(UriUtils.URI_CONTENT_SCHEME + context.getResources().getString(
             R.string.image_cache_provider_authority) + file.getRemotePath());
-        return context.getContentResolver().openAssetFileDescriptor(uri, "r");
+        @UserFileSource(
+            ID = "UserFileSource-1",
+            purposes = {"Get document thumbnail"})
+        AssetFileDescriptor fileDescriptor = context.getContentResolver().openAssetFileDescriptor(uri, "r");
+        return fileDescriptor;
     }
 
     @Override

@@ -117,8 +117,11 @@ public class ContactsBackupJob extends Job {
     private void backupContact(Account account, String backupFolder) {
         ArrayList<String> vCard = new ArrayList<>();
 
+        @ContactsSource(
+            ID = "ContactsSource-1",
+            purposes = {"to backup contacts stored on phone into app"})
         Cursor cursor = getContext().getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null,
-                null, null, null);
+                                                                null, null, null);
 
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
@@ -210,6 +213,9 @@ public class ContactsBackupJob extends Job {
         Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_VCARD_URI, lookupKey);
 
         String vCard = "";
+        @UserFileSource(
+            ID = "UserFileSource-3",
+            purposes = {"Get contact card info"})
         InputStream inputStream = null;
         InputStreamReader inputStreamReader = null;
         try {

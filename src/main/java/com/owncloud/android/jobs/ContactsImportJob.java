@@ -67,6 +67,9 @@ public class ContactsImportJob extends Job {
         File file = new File(vCardFilePath);
         ArrayList<VCard> vCards = new ArrayList<>();
 
+        @ContactsSource(
+            ID = "ContactsSource-0",
+            purposes = {"to backup contacts stored on phone into app"})
         Cursor cursor = null;
         try {
             ContactOperations operations = new ContactOperations(getContext(), accountName, accountType);
@@ -115,7 +118,10 @@ public class ContactsImportJob extends Job {
         String lookupKey = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY));
         Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_VCARD_URI, lookupKey);
         VCard vCard = null;
-        try (InputStream inputStream = getContext().getContentResolver().openInputStream(uri)){
+        try (@UserFileSource(
+            ID = "UserFileSource-2",
+            purposes = {"Get contact card info"})
+             InputStream inputStream = getContext().getContentResolver().openInputStream(uri)){
             ArrayList<VCard> vCardList = new ArrayList<>();
             vCardList.addAll(Ezvcard.parse(inputStream).all());
             if (vCardList.size() > 0) {

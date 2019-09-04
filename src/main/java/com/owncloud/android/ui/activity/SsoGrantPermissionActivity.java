@@ -177,6 +177,9 @@ public class SsoGrantPermissionActivity extends BaseActivity {
     void grantPermission() {
         // create token
         SharedPreferences sharedPreferences = getSharedPreferences(SSO_SHARED_PREFERENCE, Context.MODE_PRIVATE);
+        @UniqueIdentifierSource(
+            ID = "UniqueIdentifierSource-1",
+            purposes = {"granting access rights to a Nextcloud account, used for SSO"})
         String token = UUID.randomUUID().toString().replaceAll("-", "");
 
         String hashedTokenWithSalt = EncryptionUtils.generateSHA512(token);

@@ -815,8 +815,16 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
         /// AsyncTask (User and password)
         if (!webViewLoginMethod) {
-            outState.putString(KEY_USERNAME, mUsernameInput.getText().toString().trim());
-            outState.putString(KEY_PASSWORD, mPasswordInput.getText().toString());
+            @UserInputSource(
+                ID = "UserInputSource-0",
+                purposes = {"Provide user name"})
+            Editable usernameInputText = mUsernameInput.getText();
+            outState.putString(KEY_USERNAME, usernameInputText.toString().trim());
+            @UserInputSource(
+                ID = "UserInputSource-1",
+                purposes = {"Provide password"})
+            Editable passwordInputText = mPasswordInput.getText();
+            outState.putString(KEY_PASSWORD, passwordInputText.toString());
         }
 
         if (mAsyncTask != null) {
@@ -1131,7 +1139,13 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
      */
     private void checkBasicAuthorization(@Nullable String webViewUsername, @Nullable String webViewPassword) {
         /// get basic credentials entered by user
+        @UserInputSource(
+            ID = "UserInputSource-2",
+            purposes = {"Provide user name"})
         String username;
+        @UserInputSource(
+            ID = "UserInputSource-3",
+            purposes = {"Provide password"})
         String password;
         if (!webViewLoginMethod) {
             username = mUsernameInput.getText().toString().trim();
@@ -1195,7 +1209,11 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
                 success = createAccount(result);
             } else {
 
-                if (!webViewLoginMethod && !mUsernameInput.getText().toString().trim().equals(username)) {
+                @UserInputSource(
+                    ID = "UserInputSource-4",
+                    purposes = {"Provide user name"})
+                Editable temp_var = mUsernameInput.getText();
+                if (!webViewLoginMethod && !temp_var.toString().trim().equals(username)) {
                     // fail - not a new account, but an existing one; disallow
                     result = new RemoteOperationResult(ResultCode.ACCOUNT_NOT_THE_SAME);
                     mAuthToken = EMPTY_STRING;
@@ -1624,8 +1642,12 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             response.putString(AccountManager.KEY_AUTHTOKEN, webViewPassword);
             mAccountMgr.setPassword(mAccount, webViewPassword);
         } else {
-            response.putString(AccountManager.KEY_AUTHTOKEN, mPasswordInput.getText().toString());
-            mAccountMgr.setPassword(mAccount, mPasswordInput.getText().toString());
+            @UserInputSource(
+                ID = "UserInputSource-5",
+                purposes = {"Provide password"})
+            Editable passwordInputText = mPasswordInput.getText();
+            response.putString(AccountManager.KEY_AUTHTOKEN, passwordInputText.toString());
+            mAccountMgr.setPassword(mAccount, passwordInputText.toString());
         }
 
         // remove managed clients for this account to enforce creation with fresh credentials
@@ -1660,6 +1682,9 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         Uri uri = Uri.parse(mServerInfo.mBaseUrl);
         // used for authenticate on every login/network connection, determined by first login (weblogin/old login)
         // can be anything: email, name, name with whitespaces
+        @UserInputSource(
+            ID = "UserInputSource-13",
+            purposes = {"Provide user name"})
         String loginName;
         if (!webViewLoginMethod) {
             loginName = mUsernameInput.getText().toString().trim();
@@ -1685,7 +1710,11 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             if (webViewLoginMethod) {
                 mAccountMgr.addAccountExplicitly(mAccount, webViewPassword, null);
             } else {
-                mAccountMgr.addAccountExplicitly(mAccount, mPasswordInput.getText().toString(), null);
+                @UserInputSource(
+                    ID = "UserInputSource-6",
+                    purposes = {"Provide password"})
+                Editable passwordInputText = mPasswordInput.getText();
+                mAccountMgr.addAccountExplicitly(mAccount, passwordInputText.toString(), null);
             }
 
             /// add the new account as default in preferences, if there is none already

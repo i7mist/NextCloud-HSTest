@@ -489,6 +489,9 @@ public class ReceiveExternalFilesActivity extends FileActivity
                 int selectPos = spinner.getSelectedItemPosition();
 
                 // verify if file name has suffix
+                @UserInputSource(
+                    ID = "UserInputSource-7",
+                    purposes = {"Read file names to check if it has suffix."})
                 String filename = userInput.getText().toString();
                 String suffix = mFilenameSuffix.get(selectPos);
                 if (!filename.endsWith(suffix)) {

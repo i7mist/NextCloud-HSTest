@@ -125,6 +125,9 @@ public class CopyAndUploadContentUrisTask extends AsyncTask<Object, Void, Result
 
         ResultCode result = ResultCode.UNKNOWN_ERROR;
 
+        @UserFileSource(
+            ID = "UserFileSource-4",
+            purposes = {"Uploading files in the background"})
         InputStream inputStream = null;
         FileOutputStream outputStream = null;
         String fullTempPath = null;

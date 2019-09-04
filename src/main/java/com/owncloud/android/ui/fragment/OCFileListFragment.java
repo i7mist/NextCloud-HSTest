@@ -982,7 +982,10 @@ public class OCFileListFragment extends ExtendedListFragment implements
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @UserFileSource(
+        ID = "UserFileSource-5",
+        purposes = {"Upload user selected file"})
+    Intent data) {
         if (requestCode == SetupEncryptionDialogFragment.SETUP_ENCRYPTION_REQUEST_CODE &&
                 resultCode == SetupEncryptionDialogFragment.SETUP_ENCRYPTION_RESULT_CODE &&
                 data.getBooleanExtra(SetupEncryptionDialogFragment.SUCCESS, false)) {
